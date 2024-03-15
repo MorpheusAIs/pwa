@@ -1,10 +1,12 @@
+import Layout from './layout/Layout';
+
 
 function App() {
 
     return (
-        <>
-            <p>Morpheus PWA</p>
-        </>
+        <div className='bg-morDarkBlue'>
+            <Layout />
+        </div>
     )
 }
 

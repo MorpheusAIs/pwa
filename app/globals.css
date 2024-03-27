@@ -1,0 +1,182 @@
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary-accent: #20DC8E;
+  --primary-accent-hover: #179C65;
+  --primary-accent-pressed: #106F48;
+  --primary-bg: #012C33;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+.rainbow {
+  background: linear-gradient(90deg, #A12352 7.12%, #D65B2D 27.66%, #FAD91C 57.72%, #2E92BE 82.77%, #085B64 101.81%);
+}
+
+.lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  margin: auto;
+  z-index: -1;
+}
+
+.line {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  background-image: linear-gradient(180deg, rgba(255,255,255,.0) 15%, rgba(255,255,255,.08) 100%);
+  overflow: hidden;
+}
+.line::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 15vh;
+  width: 100%;
+  top: -50%;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #00FF85 75%, #00FF85 100%);
+  -webkit-animation: drop 7s 0s infinite;
+          animation: drop 7s 0s infinite;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+          animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+}
+.line:nth-child(1) {
+  left: 0;
+}
+.line:nth-child(1)::after {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+.line:nth-child(3) {
+  right: 0;
+  left: auto;
+}
+.line:nth-child(3)::after {
+  -webkit-animation-delay: 2.5s;
+          animation-delay: 2.5s;
+}
+
+@-webkit-keyframes drop {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+@keyframes drop {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+.embedForm {
+  background: transparent !important;
+}
+.ml-form-successContent h4, 
+.ml-form-successContent p {
+  color: #fff !important;
+  text-align: center !important; 
+}
+
+.prose {
+  flex: 1;
+  max-width: 65ch;
+}
+
+/* .prose :where(ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  list-style-type: decimal;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.625em;
+}
+.prose :where(.prose>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  margin-bottom: 0;
+}
+.prose :where(ol>li):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  padding-left: 0.37em;
+}
+.prose :where(li):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+ol li::marker {
+  font-weight: 400;
+  color: var(--chakra-colors-text-subtle);
+} */
+
+.prose ol {
+  counter-reset: list-number;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.prose :where(ol):not(:where([class~=not-prose] *)) {
+  list-style-type: decimal;
+  margin-bottom: 1.25em;
+  margin-top: 1.25em;
+  padding-left: 1.625em;
+}
+
+.prose ol > li {
+  counter-increment: list-number;
+    display: block;
+    margin-bottom: 0;
+    margin-top: 0;
+    min-height: 28px;
+    position: relative;
+}
+
+.prose :where(ol>li):not(:where([class~=not-prose] *)) {
+  padding-left: 0.375em;
+}
+.prose :where(li):not(:where([class~=not-prose] *)) {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.prose ol > li:before {
+  font-weight: 400;
+  color: var(--chakra-colors-text-subtle);
+  position: absolute;
+  content: counters(list-number,".") ".";
+  padding-right: 0.5rem;
+  transform: translate(-100%, 0);
+}
+
+@media screen and (max-width: 768px) {
+  .prose ol {
+    padding-left: 2rem;
+  }
+}
+
+@keyframes pulse {
+  50% {
+      opacity: .5
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite
+}

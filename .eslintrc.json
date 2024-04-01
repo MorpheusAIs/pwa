@@ -1,0 +1,79 @@
+{
+  "overrides": [
+    {
+      "extends": ["plugin:@typescript-eslint/recommended-requiring-type-checking"],
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      }
+    },
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "prettier", "simple-import-sort"],
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "inline-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-misused-promises": [2, { "checksVoidReturn": { "attributes": false } }],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 100,
+        "endOfLine": "lf",
+        "tabWidth": 2,
+        "useTabs": false,
+        "singleQuote": true,
+        "semi": false,
+        "arrowParens": "avoid",
+        "jsxSingleQuote": true,
+        "trailingComma": "all"
+      }
+    ],
+    "default-case": "error",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          ["^\\u0000"],
+          [
+            "^@?\\w",
+            "^assets(/.*|$)",
+            "^components(/.*|$)",
+            "^context(/.*|$)",
+            "^hooks(/.*|$)",
+            "^jest(/.*|$)",
+            "^lib(/.*|$)",
+            "^pages(/.*|$)",
+            "^services(/.*|$)",
+            "^state(/.*|$)",
+            "^theme(/.*|$)",
+            "^types(/.*|$)"
+          ],
+          ["^\\."]
+        ]
+      }
+    ],
+    "object-shorthand": "error",
+    "eqeqeq": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/array-type": "error",
+    "react/jsx-handler-names": "error",
+    "require-await": "error",
+    "import/no-duplicates": "error"
+  }
+}

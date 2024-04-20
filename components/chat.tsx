@@ -28,6 +28,13 @@ type ChatProps = {
   stopConversationRef: MutableRefObject<boolean>
 }
 
+interface ApiResponse {
+  model?: string
+  created_at?: string
+  response?: string
+  done?: boolean
+}
+
 export const Chat: React.FC<ChatProps> = memo(({ stopConversationRef }) => {
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true)
   const [currentMessage, setCurrentMessage] = useState<Message>()
@@ -88,7 +95,14 @@ export const Chat: React.FC<ChatProps> = memo(({ stopConversationRef }) => {
           ...chatBody,
         })
         const controller = new AbortController()
-        const response = await fetch('/api/chat', {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL?.toString()
+        if (!API_URL) {
+          console.error('API_URL is undefined')
+          homeDispatch({ field: 'loading', value: false })
+          homeDispatch({ field: 'messageIsStreaming', value: false })
+          return
+        }
+        const response = await fetch(API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -130,13 +144,24 @@ export const Chat: React.FC<ChatProps> = memo(({ stopConversationRef }) => {
             }
             const { value, done: doneReading } = await reader.read()
             done = doneReading
-            const chunkValue = decoder.decode(value)
-            text += chunkValue
+            const chunkValue = decoder.decode(value, { stream: !done })
+
+            if (chunkValue.trim() !== '') {
+              try {
+                const json: ApiResponse = JSON.parse(chunkValue) as ApiResponse
+                if (json.response) {
+                  text += json.response
+                }
+              } catch (error) {
+                console.error('Error parsing JSON:', error)
+              }
+            }
+
             if (isFirst) {
               isFirst = false
               const updatedMessages: Message[] = [
                 ...updatedConversation.messages,
-                { role: 'assistant', content: chunkValue, model: updatedConversation.model.name },
+                { role: 'assistant', content: text, model: updatedConversation.model.name },
               ]
               updatedConversation = {
                 ...updatedConversation,
@@ -146,7 +171,7 @@ export const Chat: React.FC<ChatProps> = memo(({ stopConversationRef }) => {
                 field: 'selectedConversation',
                 value: updatedConversation,
               })
-            } else {
+            } else if (text) {
               const updatedMessages: Message[] = updatedConversation.messages.map(
                 (message, index) => {
                   if (index === updatedConversation.messages.length - 1) {

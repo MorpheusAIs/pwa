@@ -242,4 +242,12 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Fair Launch',
     href: '/fair-launch',
   },
+  {
+    label: 'Dashboard',
+    href: 'https://dashboard.mor.org',
+  },
+  {
+    label: 'MOR20',
+    href: '/MOR20',
+  },
 ]

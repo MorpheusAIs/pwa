@@ -7,7 +7,7 @@ import { TypeAnimation } from 'react-type-animation'
 export const Hero = () => {
   return (
     <>
-      <Container maxW={'container.xl'}>
+      <Container maxW={'container.xl'} className="abcde">
         <Stack as={Box} textAlign={'center'} spacing={{ base: 4, md: 8 }} py={{ base: 20, md: 16 }}>
           {/* <Box position='relative' display='flex' gap='-25px' alignItems='center' justifyContent='center' mb={8}>
               <Box overflow='hidden' width={{ base: '100px', md: '178px'}} height={{ base: '100px', md: '178px'}} bg='whiteAlpha.50' borderRadius='xl' boxShadow='lg' transform='rotate(-15deg)'><Image src='/bg.jpeg' alt='image' fill objectFit='cover' /></Box>
